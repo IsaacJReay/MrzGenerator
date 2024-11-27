@@ -1,3 +1,5 @@
+using ISO3166;
+
 namespace MrzGenerator;
 
 public class Program
