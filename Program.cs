@@ -6,8 +6,8 @@ public class Program
 {
     public static void Main()
     {
-        var line1 = GenerateTd1Line1("id", Country.List.FirstOrDefault(c => c.Name == "Cambodia")!.ThreeLetterCode, "010956785");
-        var line2 = GenerateTd1Line2(Country.List.FirstOrDefault(c => c.Name == "Cambodia")!.ThreeLetterCode, "male", new DateTime(2000, 01, 14), new DateTime(2025, 4, 06));
+        var line1 = GenerateTd1Line1("id", "khm", "010956785");
+        var line2 = GenerateTd1Line2("khm", "male", new DateTime(2000, 01, 14), new DateTime(2025, 4, 06), line1);
         var line3 = GenerateTd1Line3("ngor", "pichponereay", null);
 
         Console.WriteLine("{0}\n{1}\n{2}", line1, line2, line3);
@@ -21,7 +21,7 @@ public class Program
         return line3[..30];
     }
 
-    static string GenerateTd1Line2(string nationality, string gender, DateTime dob, DateTime expirationDate)
+    static string GenerateTd1Line2(string nationality, string gender, DateTime dob, DateTime expirationDate, string line1)
     {
         if (nationality.Length > 3)
         {
@@ -35,7 +35,7 @@ public class Program
         char expCheckDigit = CalculateCheckDigit(expStr);
 
         string line2 = $"{dobStr}{dobCheckDigit}{gender[0].ToString().ToUpper()}{expStr}{expCheckDigit}{nationality.ToUpper()}".PadRight(29, '<');
-        var checkDigitLine2 = CalculateCheckDigit($"{dobStr}{dobCheckDigit}{expStr}{expCheckDigit}");
+        var checkDigitLine2 = CalculateCheckDigit($"{line1[5..]}{dobStr}{dobCheckDigit}{expStr}{expCheckDigit}");
 
         line2 = $"{line2}" + checkDigitLine2;
 
